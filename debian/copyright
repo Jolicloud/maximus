@@ -1,0 +1,50 @@
+This package was debianized by Neil J. Patel <neil.patel@canonical.com> on
+Tue, 29 Apr 2008 11:19:58 +0100.
+
+It was downloaded from https://launchpad.net/maximus/+download
+
+Upstream Author: Neil J. Patel <neil.patel@canonical.com>
+
+Copyright (C) 2008 Canonical Ltd
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+src/eggaccelerator.{c,h} are Copyright Red Hat, authored by Havoc
+Pennington and Tim Janik and are under the terms of the LGPL 2 or later.
+
+src/tomboykeybinder.{c,h} are Copyright Novell, and are also under the terms
+of the LGPL 2 or later.
+
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Library General Public
+    License as published by the Free Software Foundation; either
+    version 2 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Library General Public License for more details.
+
+    You should have received a copy of the GNU Library General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston MA
+    02110-1301 USA
+
+The packaging is copyright 2008 Canonical Ltd, and is also under the terms
+of the GPL version 3.
+
+On Debian/Ubuntu systems, the full text of GPL v3 can be found in
+`/usr/share/common-licenses/GPL-3', and the full text of the LGPL 2 can be
+found in `/usr/share/common-licenses/LGPL-2'.
+

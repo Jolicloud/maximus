@@ -1,0 +1,3 @@
+version=3
+https://launchpad.net/maximus/+download \
+ .*/maximus-(.*)\.tar\.gz
