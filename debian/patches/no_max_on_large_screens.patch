@@ -1,7 +1,7 @@
 Index: maximus/src/maximus-app.c
 ===================================================================
---- maximus.orig/src/maximus-app.c	2009-09-18 14:58:23.196151837 -0400
-+++ maximus/src/maximus-app.c	2009-09-18 15:17:18.176145941 -0400
+--- maximus.orig/src/maximus-app.c	2009-09-18 15:18:14.956644102 -0400
++++ maximus/src/maximus-app.c	2009-09-18 16:58:47.916705083 -0400
 @@ -22,6 +22,7 @@
  #include <unistd.h>
  
@@ -55,7 +55,7 @@ Index: maximus/src/maximus-app.c
 +    width = gdk_screen_get_width (screen);
 +    height = gdk_screen_get_height (screen);
 +
-+    if (width >= APP_MAX_SCREEN_WIDTH && height >= APP_MAX_SCREEN_HEIGHT)
++    if (width > APP_MAX_SCREEN_WIDTH && height > APP_MAX_SCREEN_HEIGHT)
 +      return TRUE;
 +  }
 +
@@ -137,8 +137,8 @@ Index: maximus/src/maximus-app.c
  MaximusApp *
 Index: maximus/data/maximus.schemas
 ===================================================================
---- maximus.orig/data/maximus.schemas	2009-09-18 14:58:23.184144166 -0400
-+++ maximus/data/maximus.schemas	2009-09-18 15:06:34.744644875 -0400
+--- maximus.orig/data/maximus.schemas	2009-09-18 15:18:14.952644013 -0400
++++ maximus/data/maximus.schemas	2009-09-18 16:57:54.608643302 -0400
 @@ -48,6 +48,18 @@
          <long>Do not automatically maximize newly opened windows. If undecorate is set, will still undecorate maximised windows.</long>
        </locale>
