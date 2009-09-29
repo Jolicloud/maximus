@@ -1,8 +1,8 @@
-maximus (0.4.11jolicloud1) robby; urgency=low
+maximus (0.4.11-0ubuntu1jolicloud1) robby; urgency=low
 
-  * Don't maximize windows on screens >= 1024x600 [fixes trac:145]
+  * Don't maximize windows on screens > 1024x600 [fixes trac:145]
 
- -- Alex Launi <alex.launi@gmail.com>  Fri, 18 Sep 2009 15:24:11 -0400
+ -- Alex Launi <alex@jolicloud.org>  Fri, 18 Sep 2009 15:24:11 -0400
 
 maximus (0.4.11-0ubuntu1) karmic; urgency=low
 
