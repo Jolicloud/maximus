@@ -1,13 +1,29 @@
 Source: maximus
 Section: gnome
 Priority: optional
-Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
-Build-Depends: cdbs, debhelper (>= 5), autotools-dev, gnome-pkg-tools (>= 0.10), libglib2.0-dev (>= 2.15.5), libpango1.0-dev (>= 1.18.0), libgtk2.0-dev (>= 2.10.0), libgconf2-dev (>= 2.16.0), libcairo2-dev (>= 1.2.4), libdbus-1-dev (>= 1.0), libdbus-glib-1-dev (>= 0.7), libwnck-dev, libgnomeui-dev, libxtst-dev, libfakekey-dev
-Standards-Version: 3.8.0
+Maintainer: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Build-Depends: cdbs,
+               debhelper (>= 5),
+               autotools-dev,
+               gnome-pkg-tools (>= 0.10),
+               libglib2.0-dev (>= 2.15.5),
+               libpango1.0-dev (>= 1.18.0),
+               libgtk2.0-dev (>= 2.10.0),
+               libgconf2-dev (>= 2.16.0),
+               libcairo2-dev (>= 1.2.4),
+               libdbus-1-dev (>= 1.0),
+               libdbus-glib-1-dev (>= 0.7),
+               libwnck-dev,
+               libgnomeui-dev,
+               libxtst-dev,
+               libfakekey-dev,
+               libunique-dev
+Standards-Version: 3.8.3
 
 Package: maximus
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
 Description: A window management tool
  Maximus is a window manager designed to run one application at a time full
  screen.
