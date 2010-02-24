@@ -1,3 +1,11 @@
+maximus (0.4.14-1jolicloud1) robby; urgency=low
+
+  * Merged change from 0.4.11-0ubuntu1jolicloud1
+    - Don't maximize windows on screens > 1024x600 [fixes trac:145]
+  * Applied debian/patches/no_max_on_large_screens.patch
+
+ -- Adam McDaniel <adam@jolicloud.org>  Tue, 23 Feb 2010 20:55:07 -0700
+
 maximus (0.4.14-1jolicloud0) robby; urgency=low
 
   * Backported to Jolicloud robby
