@@ -22,6 +22,7 @@
 #include <unistd.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
 #include <gconf/gconf.h>
@@ -42,6 +43,11 @@ G_DEFINE_TYPE (MaximusApp, maximus_app, G_TYPE_OBJECT);
 #define APP_EXCLUDE_CLASS APP_PATH "/exclude_class"
 #define APP_UNDECORATE    APP_PATH "/undecorate"
 #define APP_NO_MAXIMIZE   APP_PATH "/no_maximize"
+#define APP_MAX_ON_LARGE  APP_PATH "/dont_exclude_on_large_screens"
+
+/* Max screen size consts */
+#define APP_MAX_SCREEN_WIDTH 1024
+#define APP_MAX_SCREEN_HEIGHT 600
 
 /* A set of default exceptions */
 static gchar *default_exclude_classes[] = 
@@ -78,6 +84,7 @@ struct _MaximusAppPrivate
   GSList *exclude_class_list;
   gboolean undecorate;
   gboolean no_maximize;
+  gboolean max_on_large_screens;
 };
 
 static GQuark was_decorated = 0;
@@ -279,17 +286,29 @@ on_window_state_changed (WnckWindow      *window,
 static gboolean
 is_excluded (MaximusApp *app, WnckWindow *window)
 {
+  GdkScreen *screen;
   MaximusAppPrivate *priv;
   WnckWindowType type;
   WnckWindowActions actions;
   gchar *res_name;
   gchar *class_name;
   GSList *c;
-  gint i;
+  gint i, width, height;
 
   g_return_val_if_fail (MAXIMUS_IS_APP (app), TRUE);
   g_return_val_if_fail (WNCK_IS_WINDOW (window), TRUE);
   priv = app->priv;
+
+  /* ignore the window if our screen is of a decent size */
+  if (!priv->max_on_large_screens)
+  {
+    screen = gdk_screen_get_default ();
+    width = gdk_screen_get_width (screen);
+    height = gdk_screen_get_height (screen);
+
+    if (width > APP_MAX_SCREEN_WIDTH && height > APP_MAX_SCREEN_HEIGHT)
+      return TRUE;
+  }
 
   type = wnck_window_get_window_type (window);
   if (type != WNCK_WINDOW_NORMAL)
@@ -353,7 +372,8 @@ extern gboolean no_maximize;
 static void
 on_window_opened (WnckScreen  *screen, 
                   WnckWindow  *window,
-                  MaximusApp *app)
+                  MaximusApp  *app,
+		  GConfClient *client)
 { 
   MaximusAppPrivate *priv;
   WnckWindowType type;
@@ -408,6 +428,30 @@ on_window_opened (WnckScreen  *screen,
                     G_CALLBACK (on_window_state_changed), app);
 }
 
+/* GConf Callbacks */
+static void
+on_app_max_on_large_changed (GConfClient *client,
+			     guint cid,
+			     GConfEntry *entry,
+			     MaximusApp *app)
+{
+  MaximusAppPrivate *priv;
+  GConfValue* value;
+
+  g_return_if_fail (MAXIMUS_IS_APP (app));
+  priv = app->priv;
+
+  if (entry == NULL)
+  {
+    priv->max_on_large_screens = FALSE;
+  }
+  else
+  {
+    value = gconf_entry_get_value(entry);
+    priv->max_on_large_screens = value != NULL && gconf_value_get_bool(value);
+  }
+}
+
 static void
 on_app_no_maximize_changed (GConfClient *client,
                             guint cid,
@@ -431,7 +475,6 @@ on_app_no_maximize_changed (GConfClient *client,
   }
 }
 
-/* GConf Callbacks */
 static void
 on_exclude_class_changed (GConfClient        *client,
                           guint               cid,
@@ -525,7 +568,7 @@ maximus_app_init (MaximusApp *app)
   MaximusAppPrivate *priv;
   GConfClient *client = gconf_client_get_default ();
   WnckScreen *screen;
-	
+
   priv = app->priv = MAXIMUS_APP_GET_PRIVATE (app);
 
   priv->bind = maximus_bind_get_default ();
@@ -561,6 +604,14 @@ maximus_app_init (MaximusApp *app)
   gconf_client_notify_add (client, APP_NO_MAXIMIZE,
                            (GConfClientNotifyFunc)on_app_no_maximize_changed,
                            app, NULL, NULL);
+
+  priv->max_on_large_screens = gconf_client_get_bool (client,
+						      APP_MAX_ON_LARGE,
+						      NULL);
+  g_print ("maximize with large screen: %s\n", priv->max_on_large_screens ? "true" : "false");
+  gconf_client_notify_add (client, APP_MAX_ON_LARGE,
+			   (GConfClientNotifyFunc)on_app_max_on_large_changed,
+			   app, NULL, NULL);
 }
 
 MaximusApp *

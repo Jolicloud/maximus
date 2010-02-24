@@ -48,6 +48,18 @@
         <long>Do not automatically maximize newly opened windows. If undecorate is set, will still undecorate maximised windows.</long>
       </locale>
     </schema>    
+
+    <schema>
+      <key>/schemas/apps/maximus/dont_exclude_on_large_screens</key>
+      <applyto>/apps/maximus/dont_exclude_on_large_screens</applyto>
+      <owner>maximus</owner>
+      <type>bool</type>
+      <default>0</default>
+      <locale name="C">
+        <short>Maximize window even on large screens</short>
+        <long>When our screen is >= 1024x600, it's no longer necessary to maximize to windows but this keeps the option for people who just like to.</long>
+      </locale>
+    </schema>
        
     </schemalist>
 </gconfschemafile>
