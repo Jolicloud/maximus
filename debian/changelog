@@ -1,3 +1,38 @@
+maximus (0.4.14-1jolicloud0) robby; urgency=low
+
+  * Backported to Jolicloud robby
+
+ -- Adam McDaniel <adam@jolicloud.org>  Sat, 06 Feb 2010 14:39:54 +0100
+
+maximus (0.4.14-0ubuntu1) karmic; urgency=low
+
+  * New upstream release; fixes segfaults on free(), LP: #433710, and
+    g_closure_invoke(), LP: #351527.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Fri, 02 Oct 2009 22:27:47 +0200
+
+maximus (0.4.12-0ubuntu3) karmic; urgency=low
+
+  * Add apport hook collecting the non-default GConf settings.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Tue, 22 Sep 2009 09:55:49 +0200
+
+maximus (0.4.12-0ubuntu2) karmic; urgency=low
+
+  * Doh, add libunique-dev bdep.
+  * Wrap build-deps and deps for cleaner diffs.
+  * Bump up Standards-Version to 3.8.3; no change needed.
+  * Set maintainer to Ubuntu Core Developers since the package moved to main.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Mon, 21 Sep 2009 11:02:37 +0200
+
+maximus (0.4.12-0ubuntu1) karmic; urgency=low
+
+  * New upstream release.
+    - Maximus is a singleton now; LP: #401916.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Mon, 21 Sep 2009 10:43:35 +0200
+
 maximus (0.4.11-0ubuntu1jolicloud1) robby; urgency=low
 
   * Don't maximize windows on screens > 1024x600 [fixes trac:145]
