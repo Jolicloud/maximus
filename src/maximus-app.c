@@ -100,9 +100,9 @@ wnck_window_is_decorated (WnckWindow *window)
 {
   GdkDisplay *display = gdk_display_get_default();
   Atom hints_atom = None;
-  guchar *data;
+  guchar *data = NULL;
   MotifWmHints *hints = NULL;
-  Atom type;
+  Atom type = None;
   gint format;
   gulong nitems;
   gulong bytes_after;
@@ -125,7 +125,9 @@ wnck_window_is_decorated (WnckWindow *window)
   
   retval = hints->decorations;
   
-  XFree (hints);
+  if (data)
+    XFree (data);
+
   return retval;
 }
 
@@ -135,9 +137,9 @@ gdk_window_set_mwm_hints (WnckWindow *window,
 {
   GdkDisplay *display = gdk_display_get_default();
   Atom hints_atom = None;
-  guchar *data;
-  MotifWmHints *hints;
-  Atom type;
+  guchar *data = NULL;
+  MotifWmHints *hints = NULL;
+  Atom type = None;
   gint format;
   gulong nitems;
   gulong bytes_after;
@@ -154,7 +156,7 @@ gdk_window_set_mwm_hints (WnckWindow *window,
 		                  False, AnyPropertyType, &type, &format, &nitems,
 		                  &bytes_after, &data);
   
-  if (type == None || !data)
+  if (type != hints_atom || !data)
     hints = new_hints;
   else
   {
@@ -223,6 +225,32 @@ window_is_too_large_for_screen (WnckWindow *window)
            h > (gdk_screen_get_height (screen)+20)));
 }
 
+static gboolean
+on_window_maximised_changed (WnckWindow *window)
+{
+  g_return_val_if_fail (WNCK_IS_WINDOW (window), FALSE);
+
+  if (window_is_too_large_for_screen (window))
+    {
+      _window_set_decorations (window, 1);
+      wnck_window_unmaximize (window);
+    }
+  else
+    {
+      _window_set_decorations (window, 0);
+    }
+  return FALSE;
+}
+
+static gboolean
+enable_window_decorations (WnckWindow *window)
+{
+  g_return_val_if_fail (WNCK_IS_WINDOW (window), FALSE);
+
+  _window_set_decorations (window, 1);
+  return FALSE;
+}
+
 static void
 on_window_state_changed (WnckWindow      *window,
                          WnckWindowState  change_mask,
@@ -233,26 +261,17 @@ on_window_state_changed (WnckWindow      *window,
 
   if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window), "exclude"))==1)
     return;
-
+  
   if (change_mask & WNCK_WINDOW_STATE_MAXIMIZED_HORIZONTALLY
       || change_mask & WNCK_WINDOW_STATE_MAXIMIZED_VERTICALLY)
   {
     if (wnck_window_is_maximized (window) && app->priv->undecorate)
     {
-      if (window_is_too_large_for_screen (window))
-      {
-        /* The window is too big for the screen, so redecorate */
-        _window_set_decorations (window, 1);
-        wnck_window_unmaximize (window);
-      }
-      else
-      {    
-        _window_set_decorations (window, 0);
-      }
+      g_idle_add ((GSourceFunc)on_window_maximised_changed, window);
     }
     else
     {
-      _window_set_decorations (window, 1);
+      g_idle_add ((GSourceFunc)enable_window_decorations, window);
     }
   }
 }

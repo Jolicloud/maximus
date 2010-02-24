@@ -27,6 +27,7 @@
 #include <gdk/gdkx.h>
 
 #include <libgnomeui/libgnomeui.h>
+#include <unique/unique.h>
 
 #include "maximus-app.h"
 
@@ -67,6 +68,7 @@ GOptionEntry entries[] =
 };gint
 main (gint argc, gchar *argv[])
 {
+  UniqueApp *unique;
   MaximusApp *app;
   GnomeClient *client;
   GOptionContext  *context;
@@ -76,6 +78,13 @@ main (gint argc, gchar *argv[])
   g_set_application_name ("Maximus");
   
   gtk_init (&argc, &argv);
+  
+  unique = unique_app_new ("com.canonical.Maximus", NULL);
+  
+  if (unique_app_is_running (unique))
+  {
+    return 0;
+  }
 
   context = g_option_context_new ("- Maximus");
   g_option_context_add_main_entries (context, entries, "maximus");

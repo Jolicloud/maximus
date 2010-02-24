@@ -1,5 +1,5 @@
 AC_PREREQ(2.53)
-AC_INIT(maximus, 0.4.11, [])
+AC_INIT(maximus, 0.4.14, [])
 AM_INIT_AUTOMAKE()
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_SRCDIR(src/main.c)
@@ -25,6 +25,7 @@ PKG_CHECK_MODULES(DEPS,
                   libgnomeui-2.0
                   xtst
                   libfakekey
+                  unique-1.0
                   )
 AC_SUBST(DEPS_CFLAGS)
 AC_SUBST(DEPS_LIBS)
