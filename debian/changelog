@@ -1,3 +1,9 @@
+maximus (0.4.14-1jolicloud2) robby; urgency=low
+
+  * Magical hack that makes nautilus work properly
+
+ -- Andrew Stormont <andy@jolicloud.org>  Tue, 02 Mar 2010 19:41:03 +0100
+
 maximus (0.4.14-1jolicloud1) robby; urgency=low
 
   * Merged change from 0.4.11-0ubuntu1jolicloud1
