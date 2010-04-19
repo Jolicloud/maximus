@@ -1,3 +1,15 @@
+maximus (0.4.14-1jolicloud3) robby; urgency=low
+
+  [ Adam McDaniel ]
+  * Removed debian/patches; no actual upstream patches exist, just auto-
+    generated "debian-changes-<version>"
+  * Set the package's source format to 3.0 (git)
+
+  [ Andrew Stormont ]
+  * Revering Adams changes
+
+ -- Andrew Stormont <andy@jolicloud.org>  Mon, 19 Apr 2010 21:39:30 +0200
+
 maximus (0.4.14-1jolicloud2) robby; urgency=low
 
   * Magical hack that makes nautilus work properly
