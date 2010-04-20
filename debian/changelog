@@ -1,3 +1,10 @@
+maximus (0.4.14-1jolicloud4) robby; urgency=low
+
+  * Restoring the magical hack that I accidentally reverted in the last
+    release
+
+ -- Andrew Stormont <andy@jolicloud.org>  Tue, 20 Apr 2010 11:32:15 +0200
+
 maximus (0.4.14-1jolicloud3) robby; urgency=low
 
   [ Adam McDaniel ]
