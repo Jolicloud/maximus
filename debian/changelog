@@ -1,3 +1,10 @@
+maximus (0.4.14-1jolicloud5) robby-dev; urgency=low
+
+  * Restoring maximus changes to apply exclusion by screen size.
+  * Increased exclusion threshold to screens larger than 13"
+
+ -- Adam McDaniel <adam@jolicloud.org>  Tue, 29 Jun 2010 12:35:27 -0600
+
 maximus (0.4.14-1jolicloud4) robby; urgency=low
 
   * Restoring the magical hack that I accidentally reverted in the last
