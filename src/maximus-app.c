@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <math.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
@@ -46,8 +47,7 @@ G_DEFINE_TYPE (MaximusApp, maximus_app, G_TYPE_OBJECT);
 #define APP_MAX_ON_LARGE  APP_PATH "/dont_exclude_on_large_screens"
 
 /* Max screen size consts */
-#define APP_MAX_SCREEN_WIDTH 1024
-#define APP_MAX_SCREEN_HEIGHT 600
+#define APP_MAX_SCREEN_SIZE_INCHES 13
 
 /* A set of default exceptions */
 static gchar *default_exclude_classes[] = 
@@ -293,7 +293,7 @@ is_excluded (MaximusApp *app, WnckWindow *window)
   gchar *res_name;
   gchar *class_name;
   GSList *c;
-  gint i, width, height;
+  gint i;
 
   g_return_val_if_fail (MAXIMUS_IS_APP (app), TRUE);
   g_return_val_if_fail (WNCK_IS_WINDOW (window), TRUE);
@@ -302,12 +302,23 @@ is_excluded (MaximusApp *app, WnckWindow *window)
   /* ignore the window if our screen is of a decent size */
   if (!priv->max_on_large_screens)
   {
-    screen = gdk_screen_get_default ();
-    width = gdk_screen_get_width (screen);
-    height = gdk_screen_get_height (screen);
+    gint width_mm, height_mm;
+    gfloat width, height, size;
 
-    if (width > APP_MAX_SCREEN_WIDTH && height > APP_MAX_SCREEN_HEIGHT)
+    screen = gdk_screen_get_default ();
+    width_mm = gdk_screen_get_width_mm (screen);
+    height_mm = gdk_screen_get_height_mm (screen);
+    width = 0.03937 * width_mm;
+    height = 0.03937 * height_mm;
+    size = sqrtf( ( width * width ) + ( height * height ) );
+
+    g_print ("Identified screen size: %f inches\n", size );
+
+    if (size > APP_MAX_SCREEN_SIZE_INCHES) {
+      g_print ("Excluding screens > %d inches\n",
+                      APP_MAX_SCREEN_SIZE_INCHES);
       return TRUE;
+    }
   }
 
   type = wnck_window_get_window_type (window);
