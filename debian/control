@@ -19,6 +19,8 @@ Build-Depends: cdbs,
                libfakekey-dev,
                libunique-dev
 Standards-Version: 3.8.3
+Vcs-Git: git://github.com/jolicloud/maximus.git
+Vcs-Browser: https://github.com/jolicloud/maximus
 
 Package: maximus
 Architecture: any
